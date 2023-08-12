@@ -3,7 +3,7 @@ import clientPromise from '../../lib/mongodb';
 export default async function updateHandler(req, res) {
   try {
     const client = await clientPromise;
-    const db = client.db("form1");
+    const db = client.db("formupload");
     const collection = db.collection("c1");
 
     const { a, r, p } = await collection.findOne({}, { projection: { a: 1, r: 1, p:1, _id: 0 } });

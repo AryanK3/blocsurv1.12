@@ -1,5 +1,5 @@
-import { GroupAdd } from "@mui/icons-material";
-import { useState } from "react";
+import { useSession } from 'next-auth/react';
+import { ethers } from "ethers";
 import {
     Button,
     FormControlLabel,
@@ -26,16 +26,36 @@ import {
     Stack,
     Tooltip
 } from "@mui/material";
-import psSupported from "jsonwebtoken/lib/psSupported";
+import { useState } from 'react';
 
 export async function getServerSideProps(context) {
     const id = context.query.id;
     let data = await fetch("http://localhost:3000/api/findForm", { method: "POST", body: JSON.stringify({ "id": id }) });
     data = await data.json();
-    return { props: { "data": data } }
+    return { props: { "data": data , "id": id} }
 }
 
-export default function formView({ data }) {
+export default function formView({ data,id }) {
+    const { data: session } = useSession({ required: true });
+    const provider = new ethers.AlchemyProvider('sepolia', 'zfLkf49x6uCpGUh6J_of7j1DvxZXMoHz');
+    const [metamaskAccount, setMetamaskAccount] = useState(null);
+    const handleMetamaskSignIn = async () => {
+        try {
+            if (typeof window.ethereum !== 'undefined') {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            const metamaskAccount = accounts[0];
+            document.getElementById("metamask").innerHTML=metamaskAccount;
+            document.getElementById("metamask").disabled=true;
+            setMetamaskAccount(metamaskAccount);
+            }
+            else {
+            console.error('MetaMask not detected');
+            alert('MetaMask not detected')
+            }
+        } catch (error) {
+            console.error('Failed to sign in with MetaMask:', error);
+        }
+    };
     data = data["data"][0]; //data dictionary has data key
     let groups = data.groups;
     let arr = {};
@@ -44,13 +64,10 @@ export default function formView({ data }) {
             arr[groups[i].id] = '';
         }
     }
-    console.log(arr);
-    const [a, setA] = useState(arr);
     const changeHandler = e => {
         arr[e.target.name] = e.target.value;
         document.getElementById(e.target.name).value=e.target.value;
     }
-    console.log(groups);
     return (
         <div>
             <CssBaseline />
@@ -68,9 +85,13 @@ export default function formView({ data }) {
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
                             BLOcksurvVEY
                         </Typography>
+                        <Button id="metamask" variant="outlined" onClick={handleMetamaskSignIn}>Sign In with MetaMask</Button>
                     </Toolbar>
                 </AppBar>
-                <form action='/submission' method='post'>
+                <form action='/api/pay' method='post'>
+                    <input type="hidden" name="formid" value={id}></input>
+                    <input type="hidden" name="email" value={session && session.user && session.user.email}></input>
+                    <input type="hidden" name="meta" value={metamaskAccount}></input>
                     <Box
                         sx={{
                             width: '72%',

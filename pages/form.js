@@ -360,6 +360,7 @@ export default function MyForm() {
       groups: groups,
       a: val,
       r: Number(r),
+      p: 0,
       color: bgColor,
       id: uuid(),
     };
