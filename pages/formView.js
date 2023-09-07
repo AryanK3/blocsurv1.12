@@ -336,8 +336,9 @@
                                             sx={{
                                                 fontSize: '3rem',
                                             }}
-                                            onChange={(e) => changeHandler(e, group.id)
-                                            
+                                            value={parseFloat(arr[group.id]) || 0}
+                                            onChange={
+                                                (e) => changeHandler(e, group.id)                                       
                                             }
                                         />
                                     </div>
