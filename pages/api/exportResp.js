@@ -55,7 +55,7 @@ export default async function handler(req, res) {
         const formUUID = req.query.formUUID;
         const responseMap = await fetchResponsesByFormUUID(formUUID); 
         const csvContent = convertResponsesToCSV(responseMap);
-        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Type', 'text/csv'); 
         res.setHeader('Content-Disposition', `attachment; filename="${formUUID}_responses.csv"`);
         res.status(200).send(csvContent);
     } catch (error) {

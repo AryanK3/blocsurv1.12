@@ -16,6 +16,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react';
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { redirect } from 'next/navigation';
 
 export default function Dashboard(){
   const { data: session } = useSession();
@@ -63,14 +64,8 @@ export default function Dashboard(){
     setAnchorEl(null);
   };
   const handleExport = async (formUUID) => {
-    try {
-      const response = await fetch(`/api/exportResp?formUUID=${formUUID}`);
-      console.log(response)
-    } catch (error){
-      console.log(error)
-    }
+    window.location.href=`http://localhost:3000/api/exportResp?formUUID=${formUUID}`;
   };
-  
 return(
   <>
     <div>
@@ -151,7 +146,11 @@ return(
     {fetchedData ? (
       <ul>
         {fetchedData.created.map((formUUID) => (
-          <li key={formUUID}>{formUUID}<button onClick={() => handleExport(formUUID)}>Export</button></li>
+          <>
+          <li key={formUUID}>{formUUID}</li>
+          <Button variant="outlined" onClick={() => handleExport(formUUID)}>Export</Button>
+          <Button variant="outlined" onClick={()=>{window.location.href=`http://localhost:3000/response?id=${formUUID}`}}>Responses</Button>
+          </>
         ))}
       </ul>
     ) : (
