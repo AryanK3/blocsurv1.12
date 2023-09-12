@@ -14,18 +14,11 @@ import {
   Link,
   TextField
 } from "@mui/material"
-import Image from "next/image"
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
 import Logout from '@mui/icons-material/Logout'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
-import { Parallax, ParallaxLayer } from '@react-spring/parallax';
-import coin from 'pages/assets/coin.png'
-import moon from 'pages/assets/moon.png'
-import { useCallback } from "react";
-import { loadFull } from "tsparticles";
-import * as THREE from 'three';
-import Particles from "react-tsparticles";
+
 let inResult=[];
 export default function Dashboard(){
 
@@ -175,7 +168,6 @@ return(
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
           BLOcksurvVEY
         </Typography>
-        <Button onClick={() => setGraphOpen(true)}>estimate</Button>
         <TextField placeholder="Search Forms" value={search} style={{width: '15vw'}} onChange={(e)=>handleSearch(e.target.value)}/>
         {session ? (
         <Tooltip title="Account settings">

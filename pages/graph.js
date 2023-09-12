@@ -12,7 +12,7 @@ const InfiniteSeriesGraph = ({ a, r }) => {
       const dataPoints = [];
       let term = a * Math.pow(r, 0); 
       
-      for (let i = 1; term >= 0.001; i++) {
+      for (let i = 1; term >= 0.000000000001; i++) {
         labels.push(`Person ${i}`);
         dataPoints.push(term);
         term = a * Math.pow(r, i);
@@ -104,11 +104,10 @@ const GraphPage = () => {
     const inputS = parseFloat(formData.get('s'));
     const inputR = parseFloat(formData.get('r'));
   
-    if (inputS <= 0.01) {
-      alert('Amount must be a number greater than 0.01');
+    if (inputS <= 0.000000000000000001) {
+      alert('Amount must be a number greater than 0.000000000000000001');
       return;
-    }
-  
+    }  
     if (inputR < 0.5 || inputR > 0.99) {
       alert('Multiplier must be a number between 0.5 and 0.99');
       return;

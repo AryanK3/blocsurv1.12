@@ -75,7 +75,6 @@ return(
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
           BLOcksurvVEY
         </Typography>
-        <Button onClick={() => setGraphOpen(true)}>estimate</Button>
 
         {session ? (
         <Tooltip title="Account settings">
@@ -148,7 +147,7 @@ return(
         {fetchedData.created.map((formUUID) => (
           <>
           <li key={formUUID}>{formUUID}</li>
-          <Button variant="outlined" onClick={() => handleExport(formUUID)}>Export</Button>
+          <Button variant="outlined" onClick={() => handleExport(formUUID)}>Export CSV</Button>
           <Button variant="outlined" onClick={()=>{window.location.href=`http://localhost:3000/response?id=${formUUID}`}}>Responses</Button>
           </>
         ))}
@@ -157,7 +156,21 @@ return(
       <p>Loading your forms...</p>
     )}
   </div>
-    </div>
+  <div>
+    <Typography variant="h5" gutterBottom>
+      Your Taken Forms:
+    </Typography>
+    {fetchedData ? (
+      <ul>
+        {fetchedData.taken.map((formUUID) => (
+          <li key={formUUID}>{formUUID}</li>
+        ))}
+      </ul>
+    ) : (
+      <p>Loading your forms...</p>
+    )}
+  </div>
+  </div>  
   </>
 )
 }

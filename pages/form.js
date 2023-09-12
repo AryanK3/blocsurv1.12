@@ -324,7 +324,7 @@ export default function MyForm() {
 
         if (addr === toAddress) {
           await upload(val)
-          alert('Form uploaded successfully. Welcome!');
+          alert(`Form uploaded successfully! Transaction id: ${transactionHash}`);          
           window.location.reload();
         }
         else {
@@ -583,7 +583,7 @@ export default function MyForm() {
               {activeStep === 2 && (
                 <div>
                   {uploading && <LinearProgress />}
-                  <Typography>Note: The metamask dialog will open with our toAaddress. Ensure you dont change the toAddress, else your form will not be uploaded to our servers.</Typography>
+                  <Typography>Note: The metamask dialog will open with our toAddress. Ensure you dont change the toAddress, else your form will not be uploaded to our servers.</Typography>
                   <br /><Typography>You can edit the Amount in the metamask dialog, it will be updated in our servers.</Typography>
                   <br /><Typography>Click the below button to open metamask dialog. Welcome to the BLOcksurvVEY family!</Typography>
                   <Button variant="contained" onClick={sendEth} sx={{ marginBottom: '10px' }} disabled={uploading} >

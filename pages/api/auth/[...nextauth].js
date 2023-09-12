@@ -25,7 +25,8 @@ export default NextAuth({
                 survtaken: 0,
                 survmade: 0,
                 amtearned: 0,
-                created: []
+                created: [],
+                taken: []
             };
             await userCollection.insertOne(newUserProfile);
         }

@@ -114,7 +114,7 @@
             }));
           };          
             
-    const handleSubmit = () => {
+    const validateForm = () => {
         const allGroupsValid = groups.every((group) => {
             if (group.type === "radio") {
                 return !!selectedRadioOptions[group.id];
@@ -140,6 +140,7 @@
             setAnchorEl(null);
         };
             
+
     return (
         <div>
             <CssBaseline />
@@ -149,6 +150,27 @@
                         background-color: ${data.color};
                         height: 100vh;
                     }
+                    .sb{
+                        background-color: green; 
+                        border: none;
+                        color: white;
+                        padding: 16px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        transition-duration: 0.4s;
+                        cursor: pointer;
+                      } 
+                      .sb:hover {
+                        background-color: green;
+                        color: white;
+                      }
+                      .sb:disabled{
+                        opacity: 0.6;
+                        cursor: not-allowed;
+                        }
                 `}
             </style>
             <div>
@@ -336,8 +358,9 @@
                                             sx={{
                                                 fontSize: '3rem',
                                             }}
-                                            onChange={(e) => changeHandler(e, group.id)
-                                            
+                                            value={parseFloat(arr[group.id]) || 0}
+                                            onChange={
+                                                (e) => changeHandler(e, group.id)                                            
                                             }
                                         />
                                     </div>
@@ -345,10 +368,9 @@
                             }
                         </Box>
                     })}
-                <button type="submit" disabled={handleSubmit()}>Submit</button>
+                <button type="submit" class="sb" disabled={validateForm()}>Submit</button>
                 </form>
             </div>
         </div >
     )
 }
-//rating can be declicked to null

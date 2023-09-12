@@ -63,6 +63,7 @@ export default function response({q2labels,q2data}){
       };
     return(
         <>
+      <CssBaseline/>
         <AppBar position="static" sx={{minHeight: '5vh',maxHeight:'15vh', backgroundColor: "white"}}>
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
@@ -111,7 +112,7 @@ export default function response({q2labels,q2data}){
     {Object.keys(q2labels).map((q)=>{
         return(
             <>
-                <h1>{q}</h1>
+                <Typography variant="h3" marginTop="10px">{q}</Typography>
                 <div id={q} zIndex="-1">
                 <Bar
                     data={{
