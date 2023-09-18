@@ -43,8 +43,10 @@ export default function Dashboard(){
         else{
           setSearch(val);
           document.getElementById('searchDiv').style.visibility='';
+          console.log("here")
           let data = await fetch("http://localhost:3000/api/searchAPI", { method: "POST", body: JSON.stringify({ "arg": val }) });
           data=await data.json()
+          console.log(data)
           for(let i=0;i<data.length;i++){
             if(inResult.indexOf(data[i]["id"])>-1){;}
             else{
@@ -67,9 +69,10 @@ return(
     <style>
         {`
           body {
-            background-color: #974EC3;
+            background-color: #64CCC5;
             height: 100vh;
-            color: white;
+            color: #EEE;
+            overflow-y:hidden;
           }
           section{
             position: relative;
@@ -80,10 +83,10 @@ return(
             padding: 100px 20vw;
           }
           .color1{
-            background-color: #FE7BE5;
+            background-color: #176B87;
           }
           .color2{
-            background-color: #974EC3;
+            background-color: #64CCC5;
           }
           .custom-shape-divider-top-1694366018 {
             left: 0;
@@ -100,18 +103,22 @@ return(
           }
 
           .custom-shape-divider-top-1694366018 .shape-fill {
-            fill: #FE7BE5;
+            fill: #176B87;
           }
           .card{
-            width: 50%;
-            min-width:200px;
+            position: relative;
+            min-width:75px;
             height: 70%;
-            background-color: #FE7BE5;
+            background-color: transparent;
             display: flex;
+            bottom: -30%;
+            color: #EEE;
             flex-direction: column;
             align-items: center;
             border-radius:20px;
-            font-size: 200%;
+            font-size: 100%;
+            vertical-align: center;
+            max-height: 150px;
           }
           .button-59 {
             align-items: center;
@@ -145,9 +152,9 @@ return(
           }
 
           .button-59:hover {
-            border-color: #FE7BE5;
-            color: #FE7BE5;
-            fill: #FE7BE5;
+            border-color: #176B87;
+            color: #176B87;
+            fill: #176B87;
           }
 
           .button-59:active {
@@ -209,9 +216,9 @@ return(
       </Toolbar>
     </AppBar>
     </div>
-    <div id="searchDiv" style={{height: '40%',width: '100%',backgroundColor: '#974EC3',visibility: 'hidden',color: 'white',display: 'flex',flexDirection: 'row', gap: '5px'}}></div>
+    <div id="searchDiv" style={{position: 'absolute',height: '40%',width: '100%',backgroundColor: '#176B87',visibility: 'hidden',color: 'white',display: 'flex',flexDirection: 'row', gap: '5px', zIndex: '10'}}></div>
     <section className="color1" style={{fontSize: '4vw'}}>
-          <p>GET PAID FOR GIVING SURVEYS</p>
+          <p style={{zIndex: '20'}}>GET PAID FOR GIVING SURVEYS</p>
     </section>
     <div class="custom-shape-divider-top-1694366018">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -219,16 +226,16 @@ return(
     </svg>
   </div>
     <section className="color2">
-    <div style={{position: 'absolute',width: '80%', height: '70%', left:'10%',display: 'flex',flexDirection: 'row',gap: '20px', overflowX: 'scroll'}}>
+    <div style={{position: 'absolute',width: '80%', height: '70%',left: '10%',display: 'flex',flexDirection: 'row', overflowX: 'scroll', top: '-70%',gap: '20px'}}>
         <div class="card">
           <p>Design Form</p>
-          <Button style={{color: 'white',borderColor:'white'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/form"}>Click Here!</Button>
+          <Button style={{color: '#EEE',borderColor:'#EEE'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/form"}>Click Here!</Button>
         </div>
         <div class="card">
         <p>Dashboard</p>
-        <Button style={{color: 'white',borderColor:'white'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/dashboard"}>Click Here!</Button>
+        <Button style={{color: '#EEE',borderColor:'#EEE'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/dashboard"}>Click Here!</Button>
         </div>
-      </div>
+    </div>
     </section>
   </>
 )
