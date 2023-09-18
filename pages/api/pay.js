@@ -1,24 +1,34 @@
 import clientPromise from '../../lib/mongodb';
 import { ethers } from "ethers";
+
 async function getData(req){
   const body=req.body;
-  const client=await clientPromise;
+
+  const email = body['email'];
+  const formId = body['formid'];
+  const client = await clientPromise;
+  const db2=client.db("users");
+  const collection2=db2.collection("profiles");
+  const userDocument = await collection2.findOne({ mail: email });
+  
+  if (userDocument && userDocument.taken.includes(formId)) {
+    return {message : "You have already done a submission."}; 
+  } 
+
   const db=client.db("formupload");
-  const collection=db.collection(body['formid']);
+  const collection=db.collection(formId);
   const data=await collection.find({}).toArray();
   const newPValue = data[0]['p'] + 1;
   const resp=client.db("responses");
-  const collectionName = body['formid'];
+  const collectionName = formId;  
   if (!(await db.listCollections({ name: collectionName }).hasNext())) {
       await db.createCollection(collectionName);
   }
   const respc=resp.collection(collectionName);
   await respc.insertOne(body);
 
-  const db2=client.db("users");
-  const collection2=db2.collection("profiles");
-  const email = body['email']
   await collection2.updateOne({ mail: email },{ $inc: { survtaken: 1 } });    
+  await collection2.updateOne({ mail: email },{ $push: { taken: formId } });    
 
   const amount = data[0]['a'].toFixed(18);
   if (amount >= Math.pow(10, -18)) {
@@ -34,11 +44,14 @@ async function getData(req){
       };
     const signedTransaction = await predefinedAccount.sendTransaction(transaction);
     console.log('Transaction sent:', signedTransaction); 
-    await collection2.updateOne({ mail: email }, { $inc: { amtearned: parseFloat(amount) } });    
+    
+    await collection2.updateOne({ mail: email }, { $inc: { amtearned: parseFloat(amount) } });
+    return {message : "Transaction successful!", Transaction_Hash: signedTransaction};      
   } else{
     const newAValue=0;
-    await collection.updateOne({}, { $set: { a: newAValue, p: newPValue } });
-    console.log('Amount reached 0. No further transactions.');
+    await collection.updateOne({ mail: email }, { $set: { a: newAValue, p: newPValue } });    
+    console.log('No more form payout left');
+    return {message : "No more form payout left"};  
   }
 }
 export default function handler(req, res) {
