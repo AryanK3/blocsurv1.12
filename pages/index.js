@@ -12,7 +12,7 @@ import {
   ListItemIcon,
   IconButton,
   Link,
-  TextField
+  TextField,
 } from "@mui/material"
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState, useEffect } from 'react'
@@ -50,7 +50,16 @@ export default function Dashboard(){
           for(let i=0;i<data.length;i++){
             if(inResult.indexOf(data[i]["id"])>-1){;}
             else{
-              document.getElementById("searchDiv").innerHTML+=`<Button class="button-59" onClick="function a(){window.location.href='http://localhost:3000/formView?id=${data[i]['id']}'};a();" style={{color: 'white',borderColor: 'white'}}>${data[i]["title"]}</Button>`;
+              document.getElementById("searchDiv").innerHTML+=`
+              <div class="card">
+                <div class="card__details">
+                  <div class="name">
+                  ${data[i]["title"]}
+                  </div>
+                  <p style="font-size: 14px; color: #7f8c9b; line-height: 150%">${data[i]["description"]}</p>               
+                </div>
+                  <button class="cbutton" onClick="function a(){window.location.href='http://localhost:3000/formView?id=${data[i]['id']}'};a();" style={{color: 'white',borderColor: 'white'}}>Payout: ${data[i]['a']}</button>
+                </div>`;
               inResult.push(data[i]["id"]);
             }
           }
@@ -72,7 +81,6 @@ return(
             background-color: #64CCC5;
             height: 100vh;
             color: #EEE;
-            overflow-y:hidden;
           }
           section{
             position: relative;
@@ -87,11 +95,11 @@ return(
           }
           .color2{
             background-color: #64CCC5;
+            overflow: scroll;
           }
           .custom-shape-divider-top-1694366018 {
             left: 0;
             width: 100%;
-            overflow: hidden;
             line-height: 0;
         }
         
@@ -99,74 +107,55 @@ return(
             position: relative;
             display: block;
             width: calc(100% + 1.3px);
-            height: 247px;
+            height: 200px;
           }
 
           .custom-shape-divider-top-1694366018 .shape-fill {
             fill: #176B87;
           }
-          .card{
-            position: relative;
-            min-width:75px;
-            height: 70%;
-            background-color: transparent;
-            display: flex;
-            bottom: -30%;
-            color: #EEE;
-            flex-direction: column;
-            align-items: center;
-            border-radius:20px;
-            font-size: 100%;
-            vertical-align: center;
-            max-height: 150px;
+          .card {
+            background-color: white;
+            border: 1px solid #bacdd8;
+            padding: 8px;
+            border-radius: 12px;
+            min-height:250px;
           }
-          .button-59 {
-            align-items: center;
-            background-color: #fff;
-            border: 2px solid #000;
-            box-sizing: border-box;
-            color: #000;
-            cursor: pointer;
-            display: inline-flex;
-            fill: #000;
-            font-family: Inter,sans-serif;
-            font-size: 16px;
+          .name {
+            font-size: 24px;
             font-weight: 600;
-            height: 48px;
-            justify-content: center;
-            letter-spacing: -.8px;
-            line-height: 24px;
-            min-width: 140px;
-            outline: 0;
-            padding: 0 17px;
-            text-align: center;
-            text-decoration: none;
-            transition: all .3s;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
+            margin-top: 16px;
+            color: black
           }
-
-          .button-59:focus {
-            color: #171e29;
+          .cbutton {
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #0077ff;
+            background-color: #e0efff;
+            margin: 0 auto;
+            display: block;
+            cursor: pointer;
           }
-
-          .button-59:hover {
-            border-color: #176B87;
-            color: #176B87;
-            fill: #176B87;
+          .card__details {
+            padding: 16px 8px 8px 8px;
           }
-
-          .button-59:active {
-            border-color: #FE7BE5;
-            color: #FE7BE5;
-            fill: #FE7BE5;
-          }
+        .cbutton:focus,
+        .cbutton:hover {
+          background-color: #0077ff;
+          color: #e0efff;
+        }
 
           @media (min-width: 768px) {
             .button-59 {
               min-width: 170px;
             }
+          }
+          .MuiTextField-root{
+            background: white;
+          }
+          .MuiInputBase-input{
+            background: white;
           }
           `}
       </style>
@@ -175,7 +164,7 @@ return(
         <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
           BLOcksurvVEY
         </Typography>
-        <TextField placeholder="Search Forms" value={search} style={{width: '15vw'}} onChange={(e)=>handleSearch(e.target.value)}/>
+        <Button href="/howto" variant="outlined">First time?</Button>
         {session ? (
         <Tooltip title="Account settings">
           <IconButton onClick={handleClick}>
@@ -183,7 +172,7 @@ return(
           </IconButton>
         </Tooltip>
       ) : (
-        <Button onClick={() => signIn('google')}>Login/Signup</Button>
+        <Button onClick={() => signIn('google')} variant="outlined">Login/Signup</Button>
       )}
 
        <Menu
@@ -216,26 +205,19 @@ return(
       </Toolbar>
     </AppBar>
     </div>
-    <div id="searchDiv" style={{position: 'absolute',height: '40%',width: '100%',backgroundColor: '#176B87',visibility: 'hidden',color: 'white',display: 'flex',flexDirection: 'row', gap: '5px', zIndex: '10'}}></div>
-    <section className="color1" style={{fontSize: '4vw'}}>
-          <p style={{zIndex: '20'}}>GET PAID FOR GIVING SURVEYS</p>
+    <section className="color1" style={{fontSize: '4.2vw', flexDirection: 'row'}}>
+          <p style={{zIndex: '20', marginRight:'20px'}}>GET PAID TO GIVE SURVEYS</p>
+          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/form"}>Create a Form</Button>
+          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/allforms"}>Latest forms</Button>
     </section>
     <div class="custom-shape-divider-top-1694366018">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
         <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
     </svg>
-  </div>
-    <section className="color2">
-    <div style={{position: 'absolute',width: '80%', height: '70%',left: '10%',display: 'flex',flexDirection: 'row', overflowX: 'scroll', top: '-70%',gap: '20px'}}>
-        <div class="card">
-          <p>Design Form</p>
-          <Button style={{color: '#EEE',borderColor:'#EEE'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/form"}>Click Here!</Button>
-        </div>
-        <div class="card">
-        <p>Dashboard</p>
-        <Button style={{color: '#EEE',borderColor:'#EEE'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/dashboard"}>Click Here!</Button>
-        </div>
     </div>
+    <section className="color2" style={{fontSize: '4.2vw', flexDirection: 'column'}}>
+    <TextField id="searchforms" placeholder="Search Forms" value={search} onChange={(e)=>handleSearch(e.target.value)} sx={{color: '#ffffff'}} fullWidth/>
+    <div id="searchDiv" style={{position: 'absolute', marginTop: '80px',height: '40%',width: '100%',backgroundColor: '#64CCC5',color: 'white',display: 'flex',flexDirection: 'row', gap: '5px', zIndex: '10'}}></div>
     </section>
   </>
 )
