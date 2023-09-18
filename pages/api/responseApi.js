@@ -19,14 +19,16 @@ export default async function handler(req,res){
     }
     const retrieve=client.db("responses");
     data=await retrieve.collection(formID).find({}).toArray();
+    console.log(data)
     for(let i=0;i<data.length;i++){
         for(let j=0;j<ids.length;j++){
             if(typeof data[i][ids[j]]!=typeof []){
-                if((ids[j][data[i][ids[j]]] in labels)){
-                    labels[id2lab[ids[j]]][data[i][ids[j]]]=labels[id2lab[ids[j]]][data[i][ids[j]]]+1;
+                
+                if(data[i][ids[j]] in labels[id2lab[ids[j]]]){
+                    labels[id2lab[ids[j]]][data[i][ids[j]]]+=1;
                 }
                 else{
-                    labels[id2lab[ids[j]]][String(data[i][ids[j]])]=1;
+                    labels[id2lab[ids[j]]][data[i][ids[j]]]=1;
                 }
             }
             else{
@@ -36,7 +38,7 @@ export default async function handler(req,res){
                         labels[id2lab[ids[j]]][option]+=1;
                     }
                     else{
-                        labels[id2lab[ids[j]]][String(option)]=1;
+                        labels[id2lab[ids[j]]][option]=1;
                     }
                 }
             }

@@ -218,7 +218,7 @@ return(
     </AppBar>
     </div>
     <div id="searchDiv" style={{height: '40%',width: '100%',backgroundColor: '#974EC3',visibility: 'hidden',color: 'white',display: 'flex',flexDirection: 'row', gap: '5px'}}></div>
-    <section className="color1" style={{fontSize: '8vw'}}>
+    <section className="color1" style={{fontSize: '4vw'}}>
           <p>GET PAID FOR GIVING SURVEYS</p>
     </section>
     <div class="custom-shape-divider-top-1694366018">
@@ -227,7 +227,7 @@ return(
     </svg>
   </div>
     <section className="color2">
-      <div style={{position: 'absolute', bottom: '10%', width: '80%', height: '70%', left:'10%',display: 'flex',flexDirection: 'row',gap: '20px', overflowX: 'scroll'}}>
+    <div style={{position: 'absolute',width: '80%', height: '70%', left:'10%',display: 'flex',flexDirection: 'row',gap: '20px', overflowX: 'scroll'}}>
         <div class="card">
           <p>Design Form</p>
           <Button style={{color: 'white',borderColor:'white'}} variant="outlined" onClick={()=>window.location.href="http://localhost:3000/form"}>Click Here!</Button>
