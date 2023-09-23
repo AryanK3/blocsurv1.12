@@ -44,7 +44,7 @@ export default function Dashboard(){
           setSearch(val);
           document.getElementById('searchDiv').style.visibility='';
           console.log("here")
-          let data = await fetch(`${process.env.WEB_URL}/api/searchAPI`, { method: "POST", body: JSON.stringify({ "arg": val }) });
+          let data = await fetch("/api/searchAPI", { method: "POST", body: JSON.stringify({ "arg": val }) });
           data=await data.json()
           console.log(data)
           for(let i=0;i<data.length;i++){
@@ -58,7 +58,7 @@ export default function Dashboard(){
                   </div>
                   <p style="font-size: 14px; color: #7f8c9b; line-height: 150%">${data[i]["description"]}</p>               
                 </div>
-                  <button class="cbutton" onClick="function a(){window.location.href=${process.env.WEB_URL}};a();" style={{color: 'white',borderColor: 'white'}}>Payout: ${data[i]['a']}</button>
+                  <button class="cbutton" onClick="function a(){window.location.href='/formView?id=${data[i]['id']}'};a();" style={{color: 'white',borderColor: 'white'}}>Payout: ${data[i]['a']}</button>
                 </div>`;
               inResult.push(data[i]["id"]);
             }
@@ -207,8 +207,8 @@ return(
     </div>
     <section className="color1" style={{fontSize: '4.2vw', flexDirection: 'row'}}>
           <p style={{zIndex: '20', marginRight:'20px'}}>GET PAID TO GIVE SURVEYS</p>
-          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href=`${process.env.WEB_URL}/form`}>Create a Form</Button>
-          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href=`${process.env.WEB_URL}/allforms`}>Latest forms</Button>
+          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href="/form"}>Create a Form</Button>
+          <Button style={{color: '#EEE',borderColor:'#EEE', marginRight:'20px'}} variant="outlined" onClick={()=>window.location.href="/allforms"}>Latest forms</Button>
     </section>
     <div class="custom-shape-divider-top-1694366018">
     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
