@@ -6,7 +6,7 @@ import{
     Button
 } from '@mui/material'
 
-export default function allforms(){
+export default function Allforms(){
   const [forms, setForms] = useState([]);
   useEffect(() => {
     fetch('/api/getAllforms')

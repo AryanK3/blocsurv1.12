@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
 }
 
 
-export default function response({q2labels,q2data}){
+export default function Response({q2labels,q2data}){
     Chart.register(CategoryScale, LinearScale, BarElement)
     console.log(q2labels);
     console.log(q2data);

@@ -29,7 +29,7 @@ import {
 } from "@mui/material";
 
 
-export default function pp() {
+export default function Pp() {
   const provider = new ethers.AlchemyProvider('sepolia', 'zfLkf49x6uCpGUh6J_of7j1DvxZXMoHz');
   const predefinedPrivateKey = '74bc64ba057d9af6a3a845e188f72ec572b003eca5493f492a22d6b8d3936e8b';
 

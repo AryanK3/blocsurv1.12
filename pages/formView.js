@@ -38,7 +38,7 @@
         return { props: { "data": data , "id": id} }
     }
 
-    export default function formView({ data,id }) {
+    export default function FormView({ data,id }) {
         const { data: session } = useSession({ required: true });
         const provider = new ethers.AlchemyProvider('sepolia', 'zfLkf49x6uCpGUh6J_of7j1DvxZXMoHz');
         const [metamaskAccount, setMetamaskAccount] = useState(null);
@@ -330,7 +330,7 @@
                                                 onChange={changeHandler}
                                             >
                                                 {group.options.map((option) => (
-                                                    <MenuItem value={option.label}>{option.label}</MenuItem>
+                                                    <MenuItem key={option.label} value={option.label}>{option.label}</MenuItem>
                                                 ))}
                                             </Select>
                                         </FormControl>
