@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+<<<<<<< HEAD
     "build": "next build && mv build ./out",
+=======
+    "build": "next build && mkdir ../out",
+>>>>>>> 146d9d094bf9895c1cef5f10e2cc8348cb3aeddf
     "start": "next start",
     "lint": "next lint"
   },
