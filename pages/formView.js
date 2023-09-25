@@ -33,7 +33,7 @@
 
     export async function getServerSideProps(context) {
         const id = context.query.id;
-        let data = await fetch("/api/findForm", { method: "POST", body: JSON.stringify({ "id": id }) });
+        let data = await fetch("https://www.smartforms.tech/api/findForm", { method: "POST", body: JSON.stringify({ "id": id }) });
         data = await data.json();
         return { props: { "data": data , "id": id} }
     }
