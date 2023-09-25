@@ -27,7 +27,7 @@ export default function Allforms(){
               variant="outlined"
               onClick={() => {
                 function go() {
-                  window.location.href = `http://localhost:3000/formView?id=${form.id}`;
+                  window.location.href = `/formView?id=${form.id}`;
                 }
                 go();
               }}

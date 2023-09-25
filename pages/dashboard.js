@@ -26,7 +26,7 @@ export default function Dashboard(){
     async function fetchData() {
       if (session?.user?.email) {
         const resp = await fetch(
-          "http://localhost:3000/api/findUser",
+          "/api/findUser",
           {
             method: "POST",
             body: JSON.stringify({ mail: session.user.email }),
@@ -64,7 +64,7 @@ export default function Dashboard(){
     setAnchorEl(null);
   };
   const handleExport = async (formUUID) => {
-    window.location.href=`http://localhost:3000/api/exportResp?formUUID=${formUUID}`;
+    window.location.href=`/api/exportResp?formUUID=${formUUID}`;
   };
 return(
   <>
@@ -148,7 +148,7 @@ return(
           <>
           <li key={formUUID}>{formUUID}</li>
           <Button variant="outlined" onClick={() => handleExport(formUUID)}>Export CSV</Button>
-          <Button variant="outlined" onClick={()=>{window.location.href=`http://localhost:3000/response?id=${formUUID}`}}>Responses</Button>
+          <Button variant="outlined" onClick={()=>{window.location.href=`/response?id=${formUUID}`}}>Responses</Button>
           </>
         ))}
       </ul>
