@@ -216,7 +216,7 @@
             </Menu>                    
                 </Toolbar>
                 </AppBar>
-                <form action='/api/pay' method='post'>
+                <form action='https://www.smartforms.tech/api/pay' method='post'>
                     <input type="hidden" name="formid" value={id}></input>
                     <input type="hidden" name="email" value={session && session.user && session.user.email}></input>
                     <input type="hidden" name="meta" value={metamaskAccount}></input>
