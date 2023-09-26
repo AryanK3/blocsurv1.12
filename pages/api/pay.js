@@ -56,7 +56,7 @@ async function getData(req){
 }
 export default function handler(req, res) {
     
-    return new Promise((resolve, reject) => {
+    /*return new Promise((resolve, reject) => {
       getData(req)
         .then(response => {
           res.statusCode = 200
@@ -70,5 +70,6 @@ export default function handler(req, res) {
           res.status(405).end();
           resolve(); 
         });
-    });
+    });*/
+    res.status(200).json(JSON.stringify(getData(req)));
 }
