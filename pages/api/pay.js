@@ -54,7 +54,7 @@ async function getData(req){
     return {message : "No more form payout left"};  
   }
 }
-export default function handler(req, res) {
+export default async function handler(req, res) {
     
     /*return new Promise((resolve, reject) => {
       getData(req)
@@ -71,5 +71,6 @@ export default function handler(req, res) {
           resolve(); 
         });
     });*/
-    return res.json({"data" : JSON.stringify(getData(req))});
+    let result=await getData(req);
+    return res.json({"data" : JSON.stringify(result)});
 }
