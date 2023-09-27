@@ -26,7 +26,7 @@ import { useRef } from "react";
 export async function getServerSideProps(context) {
     
     const id = context.query.id;
-    let data = await fetch("/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });
+    let data = await fetch("https://www.smartforms.tech/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });
     data = await data.json();
     let q2labels={};
     let q2data={};
