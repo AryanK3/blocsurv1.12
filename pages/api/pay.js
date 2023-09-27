@@ -71,5 +71,5 @@ export default function handler(req, res) {
           resolve(); 
         });
     });*/
-    res.status(200).json(JSON.stringify(getData(req)));
+    return res.json({"data" : JSON.stringify(getData(req))});
 }
