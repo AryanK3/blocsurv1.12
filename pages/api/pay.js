@@ -10,12 +10,13 @@ async function getData(req){
   const db2=client.db("users");
   const collection2=db2.collection("profiles");
   const userDocument = await collection2.findOne({ mail: email });
-  
-  if (userDocument && userDocument.taken.includes(formId)) {
-    return {message : "You have already done a submission."}; 
+  console.log(userDocument,"USER DOC")
+  if (userDocument!=null) {
+    if(userDocument.taken.includes(formId)){return {message : "You have already done a submission."}; }
   } 
 
   const db=client.db("formupload");
+  console.log("formID",formId);
   const collection=db.collection(formId);
   const data=await collection.find({}).toArray();
   const newPValue = data[0]['p'] + 1;
@@ -54,9 +55,9 @@ async function getData(req){
     return {message : "No more form payout left"};  
   }
 }
-export async function handler(req, res) {
-    
-    /*return new Promise((resolve, reject) => {
+export default async function handler(req, res) {
+    console.log(await getData(req))
+    return new Promise((resolve, reject) => {
       getData(req)
         .then(response => {
           res.statusCode = 200
@@ -70,7 +71,7 @@ export async function handler(req, res) {
           res.status(405).end();
           resolve(); 
         });
-    });*/
-    let result=await getData(req);
-    return res.json({"data" : JSON.stringify(result)});
+    });
+    /*let result=await getData(req);
+    return res.status(200).json({"data" : JSON.stringify(result)});*/
 }
