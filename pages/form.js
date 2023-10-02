@@ -132,10 +132,18 @@ export default function MyForm() {
     setGroups((prevGroups) => {
       const groupIndex = prevGroups.findIndex((group) => group.id === groupId);
       if (groupIndex > -1) {
+        let newOptionLabel;
+        let optionCount = prevGroups[groupIndex].options.length + 1;
+        do {
+          newOptionLabel = `Option ${optionCount}`;
+          optionCount++;
+        } while (prevGroups[groupIndex].options.some((option) => option.label === newOptionLabel));
+  
         const newOption = {
           id: uuid(),
-          label: `Option ${prevGroups[groupIndex].options.length + 1}`,
+          label: newOptionLabel,
         };
+  
         const updatedGroups = [...prevGroups];
         updatedGroups[groupIndex].options.push(newOption);
         return updatedGroups;
@@ -179,18 +187,23 @@ export default function MyForm() {
     });
   };
 
-
   const handleOptionLabelChange = (groupId, optionId, newLabel) => {
     setGroups((prevGroups) => {
       const groupIndex = prevGroups.findIndex((group) => group.id === groupId);
       if (groupIndex > -1) {
         const optionIndex = prevGroups[groupIndex].options.findIndex((option) => option.id === optionId);
         if (optionIndex > -1) {
-          const updatedOptions = [...prevGroups[groupIndex].options];
-          updatedOptions[optionIndex].label = newLabel;
-          const updatedGroups = [...prevGroups];
-          updatedGroups[groupIndex].options = updatedOptions;
-          return updatedGroups;
+          const isLabelUnique = prevGroups[groupIndex].options.every(
+            (option, index) => index === optionIndex || option.label !== newLabel
+          );
+  
+          if (isLabelUnique) {
+            const updatedOptions = [...prevGroups[groupIndex].options];
+            updatedOptions[optionIndex].label = newLabel;
+            const updatedGroups = [...prevGroups];
+            updatedGroups[groupIndex].options = updatedOptions;
+            return updatedGroups;
+          }
         }
       }
       return prevGroups;
