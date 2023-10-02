@@ -54,7 +54,7 @@ export async function getServerSideProps(context) {
 }
 
 
-export default function response({q2labels,q2data,errorMessage}){
+export default function Response({q2labels,q2data,errorMessage}){
   if (errorMessage) {
     return <div>{errorMessage}</div>;
   }

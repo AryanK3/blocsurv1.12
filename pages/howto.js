@@ -14,7 +14,7 @@ import { signIn, signOut, useSession } from 'next-auth/react'
 import Logout from '@mui/icons-material/Logout'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
 
-export default function howto(){
+export default function Howto(){
   const { data: session } = useSession();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
