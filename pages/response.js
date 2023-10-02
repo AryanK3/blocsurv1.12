@@ -14,7 +14,7 @@ import {
     Link,
     TextField
   } from "@mui/material"
-import { signIn, signOut, useSession } from 'next-auth/react'
+import { signIn, signOut, useSession, getSession } from 'next-auth/react'
 import { useState, useEffect } from 'react';
 import Logout from '@mui/icons-material/Logout';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -24,10 +24,17 @@ import { Bar } from "react-chartjs-2";
 import { useRef } from "react";
 
 export async function getServerSideProps(context) {
-    
+ 
     const id = context.query.id;
-    let data = await fetch("https://www.smartforms.tech/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });
+    let data = await fetch("http://smartforms.tech/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });
     data = await data.json();
+    const session = await getSession(context);
+    if (session.user.email !== data.email){
+      return{
+        props: {errorMessage: 'Authorize with the form maker'}
+      }
+    }
+    
     let q2labels={};
     let q2data={};
     data=data.data;
@@ -47,13 +54,15 @@ export async function getServerSideProps(context) {
 }
 
 
-export default function Response({q2labels,q2data}){
+export default function response({q2labels,q2data,errorMessage}){
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
+  }
     Chart.register(CategoryScale, LinearScale, BarElement)
     console.log(q2labels);
     console.log(q2data);
     const { data: session } = useSession();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [search, setSearch]=useState();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -65,51 +74,50 @@ export default function Response({q2labels,q2data}){
         <>
       <CssBaseline/>
         <AppBar position="static" sx={{minHeight: '5vh',maxHeight:'15vh', backgroundColor: "white"}}>
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
-          BLOcksurvVEY
-        </Typography>
-        <Button onClick={() => setGraphOpen(true)}>estimate</Button>
-        {session ? (
-        <Tooltip title="Account settings">
-          <IconButton onClick={handleClick}>
-            <Avatar alt={session.user.email} src={session.user.image} />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Button onClick={() => signIn('google')}>Login/Signup</Button>
-      )}
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'black' }}>
+            BLOcksurvVEY
+          </Typography>
+          {session ? (
+          <Tooltip title="Account settings">
+            <IconButton onClick={handleClick}>
+              <Avatar alt={session.user.email} src={session.user.image} />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <Button onClick={() => signIn('google')} variant="outlined">Login/Signup</Button>
+        )}
 
-       <Menu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        sx= {{
-            overflow: 'visible',
-            mt: 1.5,
-          }}
-      >
-  
-  <Link href="/dashboard" passHref>
-    <MenuItem onClick={handleClose}>
-      <ListItemIcon>
-        <AccountCircleIcon fontSize="medium" />
-      </ListItemIcon>
-      Dashboard
-    </MenuItem>
-  </Link>
-        <MenuItem onClick={()=>signOut()}>
-          <ListItemIcon>
-            <Logout fontSize="medium" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      </Menu>
-  
-      </Toolbar>
-    </AppBar>
-    {Object.keys(q2labels).map((q)=>{
+        <Menu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          onClick={handleClose}
+          sx= {{
+              overflow: 'visible',
+              mt: 1.5,
+            }}
+        >
+    
+    <Link href="/dashboard" passHref>
+      <MenuItem onClick={handleClose}>
+        <ListItemIcon>
+          <AccountCircleIcon fontSize="medium" />
+        </ListItemIcon>
+        Dashboard
+      </MenuItem>
+    </Link>
+          <MenuItem onClick={()=>signOut()}>
+            <ListItemIcon>
+              <Logout fontSize="medium" />
+            </ListItemIcon>
+            Logout
+          </MenuItem>
+        </Menu>
+    
+        </Toolbar>
+      </AppBar>    
+      {Object.keys(q2labels).map((q)=>{
         return(
             <>
                 <Typography variant="h3" marginTop="10px">{q}</Typography>
