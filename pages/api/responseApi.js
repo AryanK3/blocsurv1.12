@@ -4,9 +4,10 @@ import clientPromise from "../../lib/mongodb";
 export default async function handler(req,res){
     const client=await clientPromise;
     const formID=JSON.parse(req.body).formUUID;
-    const upload=client.db("formupload")
-    let data=await upload.collection(formID).find({}).toArray();
-    data=data[0];
+    const upload=client.db("formsearch")
+    const collection=upload.collection("formsearch");
+    let data = await collection.findOne({ id: formID });
+    let dataa = await collection.findOne({ id: formID });
     let ids=[];
     let labels={};
     let id2lab={};
@@ -19,7 +20,6 @@ export default async function handler(req,res){
     }
     const retrieve=client.db("responses");
     data=await retrieve.collection(formID).find({}).toArray();
-    console.log(data)
     for(let i=0;i<data.length;i++){
         for(let j=0;j<ids.length;j++){
             if(typeof data[i][ids[j]]!=typeof []){
@@ -44,5 +44,5 @@ export default async function handler(req,res){
             }
         }
     }
-    res.json({ "data": labels });
+    res.json({ "data": labels, "email": dataa['name']});
 }
