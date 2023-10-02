@@ -77,7 +77,7 @@ return(
     <Typography variant="h3" sx={{marginTop: "20px"}}>First install Metamask browser extension for your wallet</Typography>
     <Link href="https://metamask.io/download">https://metamask.io/download</Link>
     <Typography variant="h3" sx={{marginTop: "40px"}}>Then sign in with Google to our website to access forms and dashboard :)</Typography>
-    <Link href="'/'">Back to home</Link><br></br><br></br><br></br>
+    <Link href="http://smartforms.tech">Back to home</Link><br></br><br></br><br></br>
     <Link href="mailto:hax0037@gmail.com?subject=Feedback&body=Message">Contact Us</Link>
   </>
 )
