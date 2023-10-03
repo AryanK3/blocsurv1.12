@@ -26,7 +26,7 @@ import { useRef } from "react";
 export async function getServerSideProps(context) {
  
     const id = context.query.id;
-    let data = await fetch("http://smartforms.tech/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });
+    let data = await fetch("https://www.smartforms.tech/api/responseApi", { method: "POST", body: JSON.stringify({ "formUUID": id }) });    
     data = await data.json();
     const session = await getSession(context);
     if (session.user.email !== data.email){
