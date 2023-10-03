@@ -55,21 +55,25 @@ export async function getServerSideProps(context) {
 
 
 export default function Response({q2labels,q2data,errorMessage}){
+  const { data: session } = useSession(); 
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   if (errorMessage) {
     return <div>{errorMessage}</div>;
   }
     Chart.register(CategoryScale, LinearScale, BarElement)
     console.log(q2labels);
     console.log(q2data);
-    const { data: session } = useSession();
-    const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-      };
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
     return(
         <>
       <CssBaseline/>
