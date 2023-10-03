@@ -63,7 +63,7 @@
                 console.error('Failed to sign in with MetaMask:', error);
             }
         };
-        data = data["data"][0]; //data dictionary has data key
+        data = data.data
         let groups = data.groups;
 
         const [arr, setArr] = useState(() => {
